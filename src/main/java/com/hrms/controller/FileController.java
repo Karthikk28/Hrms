@@ -1,14 +1,17 @@
 package com.hrms.controller;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/files")
@@ -34,7 +37,14 @@ public class FileController {
     private ResponseEntity<Resource> serveFile(String type, Long employeeId, String fileName) {
         try {
             Path filePath = Paths.get(BASE_PATH, type, employeeId.toString(), fileName);
-            Resource resource = new UrlResource(filePath.toUri());
+            if (!java.nio.file.Files.exists(filePath)) {
+                return ResponseEntity.notFound().build();
+            }
+            java.net.URI fileUri = filePath.toUri();
+            if (fileUri == null) {
+                return ResponseEntity.internalServerError().build();
+            }
+            Resource resource = new UrlResource(fileUri);
 
             if (!resource.exists()) {
                 return ResponseEntity.notFound().build();
@@ -45,7 +55,7 @@ public class FileController {
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(resource);
 
-        } catch (Exception e) {
+        } catch (java.nio.file.InvalidPathException | java.net.MalformedURLException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
