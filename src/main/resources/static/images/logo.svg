@@ -1,0 +1,20 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="uniqueGradient" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <!-- Background shape: A soft superellipse -->
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#uniqueGradient)" fill-opacity="0.1"/>
+  
+  <!-- Main Icon: A Circular Pulse -->
+  <!-- The Circle -->
+  <path d="M32 12C43.0457 12 52 20.9543 52 32C52 43.0457 43.0457 52 32 52C20.9543 52 12 43.0457 12 32C12 28.5 13 25.5 14.5 22.5" stroke="url(#uniqueGradient)" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- The Pulse Spike entering the circle -->
+  <path d="M14.5 22.5L22 36L32 18L42 36H50" stroke="url(#uniqueGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Center Dot for focus/team -->
+  <circle cx="32" cy="18" r="3" fill="#06B6D4"/>
+</svg>
